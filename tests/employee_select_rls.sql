@@ -7,9 +7,9 @@ select * from no_plan();
 /****************************************************************************/
 -- run the tests.
 
-set local role administrator;
+set local role employee;
 set postgrest.claims.company_id = '1';
-set postgrest.claims.user_id = '1';
+set postgrest.claims.user_id = '3';
 
 select set_eq(
     'select id from users',
@@ -19,30 +19,30 @@ select set_eq(
 
 select set_eq(
     'select id from clients',
-    array[ 1, 2 ],
-    'can see only clients from his company'
+    array[ 1 ],
+    'can see only clients for the assigned projects'
 );
 
 select set_eq(
     'select id from projects',
-    array[ 1, 2 ],
-    'can see only projects from his company'
+    array[ 1 ],
+    'can see only projects he is assigned to'
 );
 
 
 select set_eq(
     'select id from tasks',
-    array[ 1, 2, 3, 4 ],
-    'can see only tasks from his company'
+    array[ 1, 2 ],
+    'can see only tasks from projects he is assigned to'
 );
 
 select set_eq(
     'select project_id, user_id from users_projects',
     $$
     values
-    ( 1, 1 ),( 2, 1 ),( 1, 2 ),( 2, 2 ),( 1, 3 )
+    ( 1, 1 ),( 1, 2 ),( 1, 3 )
     $$,
-    'can see user/project associations only from his company'
+    'can see user/project associations only from projects he is assigned to'
 );
 
 select set_eq(
@@ -51,7 +51,7 @@ select set_eq(
     values
     ( 1, 1 ), (3, 1)
     $$,
-    'can see user/task associations only from his company'
+    'can see user/task associations only from projects he is assigned to'
 );
 
 
@@ -63,7 +63,7 @@ select results_eq(
 
 select results_eq(
     'select * from clients where id = 1',
-    $$values (1, 'Microsoft', 'Redmond')$$,
+    $$values (1, 'Microsoft', null)$$,
     'can see only the public fields in clients'
 );
 

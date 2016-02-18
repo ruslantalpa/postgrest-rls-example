@@ -1,5 +1,5 @@
 Example of a PostgreSql schema that would be used with PostgREST on top (work in progress).
-The purpose is to test if RLS provides the needed flexibility for a non trivial setup.
+The purpose is to test if flexible RLS security si possible using views (or RLS in 9.5) for a nontrivial setup.
 
 ```
 git clone https://github.com/ruslantalpa/postgrest-rls-example

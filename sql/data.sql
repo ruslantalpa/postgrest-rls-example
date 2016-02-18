@@ -1,3 +1,4 @@
+set search_path = data;
 insert into companies( id, name ) values
 ( 1, 'Dunder Mifflin'),
 ( 2, 'Wernham Hogg');
@@ -16,10 +17,10 @@ insert into users( id, name, email, "password", user_type, company_id ) values
 ( 11, 'Dawn Tinsley', 'dawn@wernhamhogg.com', 'pass', 'employee', 2);
 
 
-insert into clients( id, name, company_id ) values
-( 1, 'Microsoft', 1 ),
-( 2, 'Oracle', 1 ), 
-( 3, 'Apple', 2 );
+insert into clients( id, name, address, company_id ) values
+( 1, 'Microsoft', 'Redmond', 1 ),
+( 2, 'Oracle', 'Redwood Shores', 1 ), 
+( 3, 'Apple', 'Cupertino', 2 );
 
 insert into projects( id, name, client_id, company_id ) values
 ( 1, 'Windows 7', 1, 1 ),

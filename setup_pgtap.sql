@@ -12,6 +12,6 @@
 BEGIN;
 
 CREATE EXTENSION pgtap;
-
+SET search_path to api,public;
 -- Uncomment when testing with PGOPTIONS=--search_path=tap
 -- CREATE SCHEMA tap; SET search_path TO tap,public;

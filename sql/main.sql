@@ -7,10 +7,13 @@ create database app;
 \connect app
 
 begin;
-ALTER DATABASE app SET postgrest.claims.user_id TO '';
-ALTER DATABASE app SET postgrest.claims.company_id TO '';
+alter database app set postgrest.claims.user_id to '';
+alter database app set postgrest.claims.company_id to '';
+create schema data;
+create schema api;
 \i ./functions.sql
 \i ./schema.sql
+\i ./roles.sql
 \i ./data.sql
-\i ./rls.sql
+--\i ./rls.sql
 commit;

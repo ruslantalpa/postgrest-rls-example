@@ -8,9 +8,9 @@ select * from no_plan();
 -- run the tests.
 
 select * from check_test(
-    tables_are( 'public', array['companies', 'users', 'clients', 'projects', 'tasks', 'users_projects', 'users_tasks'], 'tables present' ),
+    views_are('api', array['companies', 'users', 'clients', 'projects', 'tasks', 'users_projects', 'users_tasks'], 'tables present' ),
     true,
-    'all tables are present in schema public',
+    'all views are present in schema api',
     'tables present',
     ''
 );

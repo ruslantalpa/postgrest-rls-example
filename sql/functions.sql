@@ -1,3 +1,12 @@
+SET search_path = data;
+
+create or replace function app_user_type()
+returns text
+stable
+language sql
+as $$
+    select current_user::text;
+$$;
 
 create or replace function app_user_id()
 returns integer
