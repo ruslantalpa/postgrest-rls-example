@@ -1,7 +1,7 @@
 
 set search_path to data;
 
-create sequence companies_seq;
+create sequence companies_seq start 100;
 create table companies ( 
 	id                   int primary key not null unique default nextval('companies_seq'),
 	name                 text not null
@@ -10,7 +10,7 @@ create table companies (
 
 create type user_type as enum ('administrator', 'employee');
 
-create sequence users_seq;
+create sequence users_seq start 100;
 create table users ( 
 	id                   int primary key not null unique default nextval('users_seq'),
 	name                 text not null,
@@ -20,7 +20,7 @@ create table users (
 	company_id           int references companies(id)
 );
 
-create sequence clients_seq;
+create sequence clients_seq start 100;
 create table clients ( 
 	id                   int primary key not null unique default nextval('clients_seq'),
 	name                 text not null,
@@ -28,7 +28,7 @@ create table clients (
 	company_id           int references companies(id)
 );
 
-create sequence projects_seq;
+create sequence projects_seq start 100;
 create table projects ( 
 	id                   int primary key not null unique default nextval('projects_seq'),
 	name                 text not null,
@@ -36,7 +36,7 @@ create table projects (
 	company_id           int references companies(id)
 );
 
-create sequence tasks_seq;
+create sequence tasks_seq start 100;
 create table tasks ( 
 	id                   int primary key not null unique default nextval('tasks_seq'),
 	name                 text not null,
@@ -44,7 +44,7 @@ create table tasks (
 	company_id           int references companies(id)
 );
 
-create sequence users_projects_seq;
+create sequence users_projects_seq start 100;
 create table users_projects ( 
 	project_id           int references projects(id),
 	user_id              int references users(id),
@@ -52,7 +52,7 @@ create table users_projects (
 	primary key (project_id, user_id)
 );
 
-create sequence users_tasks_seq;
+create sequence users_tasks_seq start 100;
 create table users_tasks ( 
 	task_id              int references tasks(id),
 	user_id              int references users(id),

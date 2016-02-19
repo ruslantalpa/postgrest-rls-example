@@ -26,6 +26,9 @@ apt-get -y install "postgresql-$PG_VERSION" "postgresql-contrib-$PG_VERSION" "po
 # Append to pg_hba.conf to add password auth:
 echo "host    all             all             all                     md5" >> "$PG_HBA"
 sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" "$PG_CONF"
+sed -i "s/shared_buffers = 128MB/shared_buffers = 1GB/" "$PG_CONF"
+sed -i "s/#temp_buffers = 8MB/temp_buffers = 128MB/" "$PG_CONF"
+
 
 cat << EOF | su - postgres -c psql
 -- Create the database user:

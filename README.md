@@ -7,6 +7,10 @@ cd postgrest-rls-example
 vagrant up
 vagrant ssh
 cd /vagrant
+
 ./resetdb.sh
-./runtests.sh
+./run_rls_tests.sh
+
+./load_sample_data.sh
+./run_performance_tests.sh
 ```
