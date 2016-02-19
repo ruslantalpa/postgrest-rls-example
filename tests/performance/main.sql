@@ -13,29 +13,29 @@ set postgrest.claims.user_id = '1';
 
 SELECT performs_within( 
 	'select * from companies', 
-	10, -- average_milliseconds 
-	50, -- within
+	50, -- average_milliseconds 
+	100, -- within
 	'select from companies is fast'
 );
 
 SELECT performs_within( 
 	'select * from clients', 
-	10, -- average_milliseconds 
-	50, -- within
+	20, -- average_milliseconds 
+	100, -- within
 	'select from clients is fast'
 );
 
 SELECT performs_within( 
 	'select * from projects', 
-	10, -- average_milliseconds 
-	50, -- within
+	50, -- average_milliseconds 
+	100, -- within
 	'select from projects is fast'
 );
 
 SELECT performs_within( 
 	'select * from tasks', 
-	10, -- average_milliseconds 
-	50, -- within
+	250, -- average_milliseconds 
+	300, -- within
 	'select from tasks is fast'
 );
 
