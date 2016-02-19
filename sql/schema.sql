@@ -19,6 +19,8 @@ create table users (
 	user_type            user_type not null default 'employee',
 	company_id           int references companies(id)
 );
+create index users_company_id_index on users(company_id);
+
 
 create sequence clients_seq start 100;
 create table clients ( 
@@ -27,6 +29,7 @@ create table clients (
 	address              text,
 	company_id           int references companies(id)
 );
+create index clients_company_id_index on clients(company_id);
 
 create sequence projects_seq start 100;
 create table projects ( 
@@ -35,6 +38,7 @@ create table projects (
 	client_id            int references clients(id),
 	company_id           int references companies(id)
 );
+create index projects_company_id_index on projects(company_id);
 
 create sequence tasks_seq start 100;
 create table tasks ( 
@@ -43,6 +47,7 @@ create table tasks (
 	project_id           int references projects(id),
 	company_id           int references companies(id)
 );
+create index tasks_company_id_index on tasks(company_id);
 
 create sequence users_projects_seq start 100;
 create table users_projects ( 
@@ -51,6 +56,7 @@ create table users_projects (
 	company_id           int references companies(id),
 	primary key (project_id, user_id)
 );
+create index users_projects_company_id_index on users_projects(company_id);
 
 create sequence users_tasks_seq start 100;
 create table users_tasks ( 
@@ -59,6 +65,7 @@ create table users_tasks (
 	company_id           int references companies(id),
 	primary key ( task_id, user_id )
 );
+create index users_tasks_company_id_index on users_tasks(company_id);
 
 
 
