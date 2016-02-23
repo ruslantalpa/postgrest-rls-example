@@ -61,9 +61,10 @@ select results_eq(
     'can see only his company (without id field)'
 );
 
-select results_eq(
-    'select * from clients where id = 1',
-    $$values (1, 'Microsoft', null)$$,
+select throws_ok(
+    'select id, name, address from clients where id = 1',
+    '42501',
+    'permission denied for relation clients',
     'can see only the public fields in clients'
 );
 

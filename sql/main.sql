@@ -11,7 +11,7 @@ alter database app set postgrest.claims.user_id to '';
 alter database app set postgrest.claims.company_id to '';
 create schema data;
 create schema api;
-
+\i ./functions.sql
 \i ./data_schema.sql
 \i ./api_schema.sql
 \i ./roles.sql

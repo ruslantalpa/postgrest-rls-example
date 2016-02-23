@@ -11,6 +11,7 @@ set local role administrator;
 set postgrest.claims.company_id = '1';
 set postgrest.claims.user_id = '1';
 
+-- select RLS checks
 select set_eq(
     'select id from users',
     array[ 1, 2, 3, 4, 5, 6, 7 ],
@@ -55,6 +56,7 @@ select set_eq(
 );
 
 
+-- column visibility checks
 select results_eq(
     'select * from companies',
     $$values ('Dunder Mifflin')$$,
@@ -89,6 +91,33 @@ select results_eq(
     'select * from users_tasks where user_id = 1 and task_id = 1',
     $$values (1,1)$$,
     'can see only the public fields in users_tasks'
+);
+
+-- insert privileges check
+prepare query_clients as insert into clients (name, address) values ('New Client', 'some address');
+select lives_ok(
+    'query_clients',
+    'can insert clients'
+);
+prepare query_projects as insert into projects (name, client_id) values ('New Project', 1);
+select lives_ok(
+    'query_projects',
+    'can insert projects'
+);
+prepare query_tasks as insert into tasks (name, project_id) values ('New Task', 1);
+select lives_ok(
+    'query_tasks',
+    'can insert tasks'
+);
+prepare query_users_projects as insert into users_projects (user_id, project_id) values (4, 1);
+select lives_ok(
+    'query_users_projects',
+    'can insert users_projects'
+);
+prepare query_users_tasks as insert into users_tasks (user_id, task_id) values (3, 3);
+select lives_ok(
+    'query_users_tasks',
+    'can insert users_tasks'
 );
 
 /****************************************************************************/

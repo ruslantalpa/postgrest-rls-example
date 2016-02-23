@@ -1,29 +1,4 @@
-set search_path to api, data;
-
-create or replace function app_user_type()
-returns text
-stable
-language sql
-as $$
-    select current_user::text;
-$$;
-
-create or replace function app_user_id()
-returns integer
-stable
-language sql
-as $$
-    select nullif(current_setting('postgrest.claims.user_id'), '')::integer;
-$$;
-
-
-create or replace function app_company_id()
-returns integer
-stable
-language sql
-as $$
-    select nullif(current_setting('postgrest.claims.company_id'), '')::integer;
-$$;
+set search_path to api, data, public;
 
 
 create or replace view companies as
@@ -34,7 +9,7 @@ where
 		(app_user_type() = 'administrator') or
 		(app_user_type() = 'employee')
 	)
-;
+with local check option;
 
 create or replace view users as
 select id, name, email, "password", user_type from data.users as u
@@ -44,12 +19,10 @@ where
 		(app_user_type() = 'administrator') or
 		(app_user_type() = 'employee')
 	)
-;
+with local check option;
 
 create or replace view clients as
-select 
-	id, name, 
-	case app_user_type() when 'administrator' then address else null end as address
+select id, name, address
 from data.clients as c
 where
 	c.company_id = app_company_id() and -- filter only current company id
@@ -68,12 +41,13 @@ where
 			)
 		)
 	)
-;
+with local check option;
 
 create or replace view projects as
 select id, name, client_id from data.projects as p
 where
 	p.company_id = app_company_id() and -- filter only current company id
+	p.client_id in (select id from data.clients as c where c.company_id = app_company_id()) and -- allow client id only from current company (used in insert/update cases)
 	(
 		(app_user_type() = 'administrator') or -- admins can see all projects
 		(
@@ -84,12 +58,13 @@ where
 			)
 		)
 	)
-;
+with local check option;
 
 create or replace view tasks as
 select id, name, project_id from data.tasks as t
 where
 	t.company_id = app_company_id() and -- filter only current company id
+	t.project_id in (select id from data.projects as p where p.company_id = app_company_id()) and -- allow project id only from current company (used in insert/update cases)
 	(
 		(app_user_type() = 'administrator') or
 		(
@@ -107,12 +82,14 @@ where
 			)
 		)
 	)
-;
+with local check option;
 
 create or replace view users_projects as
 select user_id, project_id from data.users_projects as up
 where
 	up.company_id = app_company_id() and -- filter only current company id
+	up.project_id in (select id from data.projects as p where p.company_id = app_company_id()) and -- allow project id only from current company (used in insert/update cases)
+	up.user_id in (select id from data.users as u where u.company_id = app_company_id()) and -- allow user id only from current company (used in insert/update cases)
 	(
 		(app_user_type() = 'administrator') or -- admins can see all associations
 		(
@@ -123,16 +100,18 @@ where
 			)
 		)
 	)
-;
+with local check option;
 
 create or replace view users_tasks as
 select user_id, task_id from data.users_tasks as ut
 where
 	ut.company_id = app_company_id() and -- filter only current company id
+	ut.user_id in (select id from data.users as u where u.company_id = app_company_id()) and -- allow user id only from current company (used in insert/update cases)
+	ut.task_id in (select id from data.tasks as t where t.company_id = app_company_id()) and -- allow task id only from current company (used in insert/update cases)
 	(
 		(app_user_type() = 'administrator') or
 		(app_user_type() = 'employee' and -- employees can see only thier own task assignaments
 			ut.user_id = app_user_id()
 		)
 	)
-;
+with local check option;
