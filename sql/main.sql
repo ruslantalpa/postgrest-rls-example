@@ -12,10 +12,8 @@ alter database app set postgrest.claims.company_id to '';
 create schema data;
 create schema api;
 
-\i ./functions.sql
-\i ./schema.sql
+\i ./data_schema.sql
+\i ./api_schema.sql
 \i ./roles.sql
-\i ./data.sql
---\i ./sample_data.sql
---\i ./rls.sql
+\i ./small_rls_dataset.sql
 commit;

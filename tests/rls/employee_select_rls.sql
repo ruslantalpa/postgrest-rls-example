@@ -32,8 +32,8 @@ select set_eq(
 
 select set_eq(
     'select id from tasks',
-    array[ 1, 2 ],
-    'can see only tasks from projects he is assigned to'
+    array[ 2, 3 ],
+    'can see only tasks from projects he is assigned to and those tasks are unassigned or directly assigned to him'
 );
 
 select set_eq(
@@ -49,9 +49,9 @@ select set_eq(
     'select task_id, user_id from users_tasks',
     $$
     values
-    ( 1, 1 ), (3, 1)
+    ( 2, 3 )
     $$,
-    'can see user/task associations only from projects he is assigned to'
+    'can see only his user/task associations'
 );
 
 
@@ -74,8 +74,8 @@ select results_eq(
 );
 
 select results_eq(
-    'select * from tasks where id = 1',
-    $$values (1, 'Design w7', 1)$$,
+    'select * from tasks where id = 2',
+    $$values (2, 'Code w7', 1)$$,
     'can see only the public fields in tasks'
 );
 
@@ -86,8 +86,8 @@ select results_eq(
 );
 
 select results_eq(
-    'select * from users_tasks where user_id = 1 and task_id = 1',
-    $$values (1,1)$$,
+    'select * from users_tasks where user_id = 3 and task_id = 2',
+    $$values (3,2)$$,
     'can see only the public fields in users_tasks'
 );
 

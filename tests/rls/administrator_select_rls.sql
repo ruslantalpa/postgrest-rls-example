@@ -32,7 +32,7 @@ select set_eq(
 
 select set_eq(
     'select id from tasks',
-    array[ 1, 2, 3, 4 ],
+    array[ 1, 2, 3, 4, 5 ],
     'can see only tasks from his company'
 );
 
@@ -49,7 +49,7 @@ select set_eq(
     'select task_id, user_id from users_tasks',
     $$
     values
-    ( 1, 1 ), (3, 1)
+    ( 1, 1 ), (2, 3)
     $$,
     'can see user/task associations only from his company'
 );

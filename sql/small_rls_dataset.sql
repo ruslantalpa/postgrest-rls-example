@@ -31,13 +31,14 @@ insert into projects( id, name, client_id, company_id ) values
 insert into tasks( id, name, project_id, company_id ) values
 ( 1, 'Design w7', 1, 1 ),
 ( 2, 'Code w7', 1, 1 ),
-( 3, 'Design w10', 2, 1 ),
-( 4, 'Code w10', 2, 1 ),
+( 3, 'Unassigned Task', 1, 1 ),
+( 4, 'Design w10', 2, 1 ),
+( 5, 'Code w10', 2, 1 ),
 
-( 5, 'Design IOS', 3, 2 ),
-( 6, 'Code IOS', 3, 2 ),
-( 7, 'Design OSX', 4, 2 ),
-( 8, 'Code OSX', 4, 2 );
+( 6, 'Design IOS', 3, 2 ),
+( 7, 'Code IOS', 3, 2 ),
+( 8, 'Design OSX', 4, 2 ),
+( 9, 'Code OSX', 4, 2 );
 
 insert into users_projects( project_id, user_id, company_id ) values
 ( 1, 1, 1 ),
@@ -52,5 +53,5 @@ insert into users_projects( project_id, user_id, company_id ) values
 
 insert into users_tasks( task_id, user_id, company_id ) values
 ( 1, 1, 1 ),
-( 3, 1, 1 ),
+( 2, 3, 1 ),
 ( 5, 8, 2 );
