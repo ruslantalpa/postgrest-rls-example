@@ -119,6 +119,20 @@ select lives_ok(
     'query_users_tasks',
     'can insert users_tasks'
 );
+prepare query_projects2 as insert into projects (name, client_id) values ('Project with invalid client', 3);
+select throws_ok(
+    'query_projects2',
+    '44000',
+    'new row violates check option for view "projects"',
+    'can not insert project with client_id from another company'
+);
+prepare query_tasks2 as insert into tasks (name, project_id) values ('Task with invalid project', 4);
+select throws_ok(
+    'query_tasks2',
+    '44000',
+    'new row violates check option for view "tasks"',
+    'can not insert task with project_id from another company'
+);
 
 /****************************************************************************/
 -- finish the tests and clean up.
