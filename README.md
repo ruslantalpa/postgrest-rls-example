@@ -1,3 +1,8 @@
+NOTE!
+While the technique in this repo are still useful, for a better way of doing RLS check out this link
+https://twitter.com/graphqlapi/status/813655206344921089
+
+
 This project is an example of a PostgreSQL schema that would be used with PostgREST on top.
 The purpose is to test if flexible RLS (Row Level Security) is possible using views (or RLS in 9.5) for a nontrivial setup.
 
