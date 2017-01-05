@@ -1,5 +1,5 @@
 NOTE!
-While the technique in this repo are still useful, for a better way of doing RLS check out this link
+While the techniques in this repo are still useful, for a better way of doing RLS check out this link
 https://twitter.com/graphqlapi/status/813655206344921089
 
 
